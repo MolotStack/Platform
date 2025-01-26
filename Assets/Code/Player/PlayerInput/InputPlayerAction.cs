@@ -22,7 +22,7 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""566bb5a5-11a7-4f69-ad3e-9d043ab09bd5"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -33,13 +33,21 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Value"",
+                    ""id"": ""bf819255-8a97-4926-a6a9-904202b1c747"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""Keyboard"",
                     ""id"": ""118fb725-f8bd-4fdf-b109-04d073dc9c61"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -48,30 +56,8 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Negative"",
                     ""id"": ""96430c4a-f279-4ee3-833d-a519319aa194"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""5d911d3c-6f3a-44c4-8bcd-a637d8757118"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""5f9841c0-23fb-4d18-944a-1630ffd75775"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -81,8 +67,8 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""4bbc429a-75a0-4e67-a8b5-7302a824c2f0"",
+                    ""name"": ""Positive"",
+                    ""id"": ""5d911d3c-6f3a-44c4-8bcd-a637d8757118"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -94,7 +80,7 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Arrow"",
                     ""id"": ""d2cc253e-6c47-42b1-a8a4-aeaefc85573f"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -103,30 +89,8 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Negative"",
                     ""id"": ""b60644de-fa82-420c-acf0-57f329248b39"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""d32a8ae3-cc06-48b2-a055-be9b21a2ddd7"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""1c54909a-c5be-4ca5-a91c-5a1e63a5d04d"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -136,8 +100,8 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""8377d169-25ad-49b0-aa48-440e39b5241a"",
+                    ""name"": ""Positive"",
+                    ""id"": ""d32a8ae3-cc06-48b2-a055-be9b21a2ddd7"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -156,6 +120,17 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d3a861c-3581-40da-a1c7-39197d37668a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -166,6 +141,7 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
         m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
         m_Character_Movement = m_Character.FindAction("Movement", throwIfNotFound: true);
         m_Character_Click = m_Character.FindAction("Click", throwIfNotFound: true);
+        m_Character_Jump = m_Character.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -217,12 +193,14 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
     private ICharacterActions m_CharacterActionsCallbackInterface;
     private readonly InputAction m_Character_Movement;
     private readonly InputAction m_Character_Click;
+    private readonly InputAction m_Character_Jump;
     public struct CharacterActions
     {
         private @InputPlayerAction m_Wrapper;
         public CharacterActions(@InputPlayerAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Character_Movement;
         public InputAction @Click => m_Wrapper.m_Character_Click;
+        public InputAction @Jump => m_Wrapper.m_Character_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -238,6 +216,9 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                 @Click.started -= m_Wrapper.m_CharacterActionsCallbackInterface.OnClick;
                 @Click.performed -= m_Wrapper.m_CharacterActionsCallbackInterface.OnClick;
                 @Click.canceled -= m_Wrapper.m_CharacterActionsCallbackInterface.OnClick;
+                @Jump.started -= m_Wrapper.m_CharacterActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_CharacterActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_CharacterActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_CharacterActionsCallbackInterface = instance;
             if (instance != null)
@@ -248,6 +229,9 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -256,5 +240,6 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

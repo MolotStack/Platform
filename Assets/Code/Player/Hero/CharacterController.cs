@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Assets.Code.Player.Hero
@@ -21,6 +22,9 @@ namespace Assets.Code.Player.Hero
             _inputAction.Character.Movement.canceled += SetMovemntDirection;
 
             _inputAction.Character.Click.canceled += OnClick;
+
+            _inputAction.Character.Jump.started += OnJump;
+            _inputAction.Character.Jump.canceled += OnJump;
         }
 
 
@@ -31,15 +35,24 @@ namespace Assets.Code.Player.Hero
             _inputAction.Character.Movement.canceled -= SetMovemntDirection;
 
             _inputAction.Character.Click.canceled -= OnClick;
+
+            _inputAction.Character.Jump.started -= OnJump;
+            _inputAction.Character.Jump.canceled -= OnJump;
         }
 
         private void SetMovemntDirection(InputAction.CallbackContext obj)
         {
-            _currentCharacter.SetDirection(obj.ReadValue<Vector2>());
+            _currentCharacter.CurrentInputDirection = (obj.ReadValue<float>());
         }
+
+        private void OnJump(InputAction.CallbackContext obj)
+        {
+            _currentCharacter.IsJump = (Convert.ToBoolean(obj.ReadValue<float>()));
+        }
+
         private void OnClick(InputAction.CallbackContext obj)
         {
-            _currentCharacter.Click();
+            //_currentCharacter.Click();
         }
     }
 }
