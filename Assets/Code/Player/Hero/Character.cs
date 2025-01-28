@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _groundCheck = GetComponentInChildren<GroundCheck>();
     }
-    
+
     private void Update()
     {
         Jump();
@@ -78,7 +78,7 @@ public class Character : MonoBehaviour
 
     private float CalculateDirectionHorizontal()
     {
-        return _currentInputDirection.x *  _speedMovement; 
+        return _currentInputDirection.x * _speedMovement;
     }
 
 }

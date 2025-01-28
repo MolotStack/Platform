@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Code.Player.Hero
 {
-    public class CharacterController : MonoBehaviour
+    public class CharacterInputHandler : MonoBehaviour
     {
         private InputPlayerAction _inputAction;
         [SerializeField]
