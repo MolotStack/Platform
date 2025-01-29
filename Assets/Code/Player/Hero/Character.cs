@@ -75,10 +75,14 @@ public class Character : MonoBehaviour
         }
     }
 
-
     private float CalculateDirectionHorizontal()
     {
         return _currentInputDirection.x * _speedMovement;
+    }
+
+    public void SetCoint(int coinCost)
+    {
+        Debug.Log(coinCost);
     }
 
 }
