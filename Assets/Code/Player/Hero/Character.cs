@@ -22,6 +22,10 @@ public class Character : MonoBehaviour
     [SerializeField]
     private PhysicsMaterial2D _heroFriction;
 
+    [SerializeField]
+    private Animator _currentAnimator;
+    [SerializeField]
+    private SpriteRenderer _currentSpriteRenderer;
 
     private Vector2 _currentInputDirection;
 
@@ -30,10 +34,21 @@ public class Character : MonoBehaviour
 
     private bool _isJump;
 
+    #region static parametrs
+
+    private static int _animIsGround = Animator.StringToHash("IsGrounded");
+    private static int _animIsRun = Animator.StringToHash("IsRuning");
+    private static int _animVerticalVelocity = Animator.StringToHash("VerticalVelocity");
+
+    #endregion
+
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _groundCheck = GetComponentInChildren<GroundCheck>();
+        _currentAnimator = GetComponentInChildren<Animator>();
+        _currentSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -58,6 +73,8 @@ public class Character : MonoBehaviour
         }
 
         _rigidbody.velocity = new Vector2(CalculateDirectionHorizontal(), _rigidbody.velocity.y);
+
+        SetAnimation();
     }
 
     private void Jump()
@@ -85,4 +102,28 @@ public class Character : MonoBehaviour
         Debug.Log(coinCost);
     }
 
+    private void SetAnimation()
+    {
+        if (_currentInputDirection.x != 0)
+        {
+            _currentAnimator.SetBool(_animIsRun, true);
+
+            if (_currentInputDirection.x > 0)
+            {
+                _currentSpriteRenderer.flipX = false;
+            }
+            else if (_currentInputDirection.x < 0)
+            {
+                _currentSpriteRenderer.flipX = true;
+            }
+        }
+        else 
+        {
+            _currentAnimator.SetBool(_animIsRun, false);
+        }
+
+
+        _currentAnimator.SetBool(_animIsGround, _groundCheck.IsGrounded);
+        _currentAnimator.SetFloat(_animVerticalVelocity, _rigidbody.velocity.y);
+    }
 }
