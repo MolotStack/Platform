@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5abc6e21027b02440b71569e081b0a3a, type: 3}
+  m_Name: GoldCoinDefault
+  m_EditorClassIdentifier: 
+  FrameRate: 10
+  Sprites:
+  - {fileID: 6582046967323461550, guid: 52728b7610ec9d7489f7311066e0a8a9, type: 3}
+  - {fileID: 1942777921290549423, guid: 52728b7610ec9d7489f7311066e0a8a9, type: 3}
+  - {fileID: 8793606821965667882, guid: 52728b7610ec9d7489f7311066e0a8a9, type: 3}
+  - {fileID: 3444832735345940322, guid: 52728b7610ec9d7489f7311066e0a8a9, type: 3}
+  IsLooping: 1
+  AllowNext: 0
