@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Code/Player/PlayerInput/InputPlayerAction.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Platform/Player/Scripts/PlayerInput/InputPlayerAction.inputactions'
 
 using System;
 using System.Collections;
@@ -38,6 +38,14 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Value"",
                     ""id"": ""bf819255-8a97-4926-a6a9-904202b1c747"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interactable "",
+                    ""type"": ""Button"",
+                    ""id"": ""38ba0530-0a49-4fc9-99e9-e9a432ec74c1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -111,6 +119,39 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""25ebd004-adb0-4e29-afac-c1d3bcf5c40e"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ef3a9202-9245-404c-bee5-fb196911a368"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1e2a02b1-23d3-4b07-8ad1-b569e5abdd58"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""c8a25c65-ff03-4a07-834d-2cdaf41a39a5"",
                     ""path"": ""<Mouse>/leftButton"",
@@ -131,6 +172,39 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7bd27435-d696-4402-8ab5-401d4c054a37"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4ac6106-6aed-4dc5-a371-e7d7b2a4edf1"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable "",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dc78f48-3fe9-4151-adf3-50c39d38caff"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable "",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -142,6 +216,7 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
         m_Character_Movement = m_Character.FindAction("Movement", throwIfNotFound: true);
         m_Character_Click = m_Character.FindAction("Click", throwIfNotFound: true);
         m_Character_Jump = m_Character.FindAction("Jump", throwIfNotFound: true);
+        m_Character_Interactable = m_Character.FindAction("Interactable ", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -194,6 +269,7 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
     private readonly InputAction m_Character_Movement;
     private readonly InputAction m_Character_Click;
     private readonly InputAction m_Character_Jump;
+    private readonly InputAction m_Character_Interactable;
     public struct CharacterActions
     {
         private @InputPlayerAction m_Wrapper;
@@ -201,6 +277,7 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Character_Movement;
         public InputAction @Click => m_Wrapper.m_Character_Click;
         public InputAction @Jump => m_Wrapper.m_Character_Jump;
+        public InputAction @Interactable => m_Wrapper.m_Character_Interactable;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -219,6 +296,9 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_CharacterActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_CharacterActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_CharacterActionsCallbackInterface.OnJump;
+                @Interactable.started -= m_Wrapper.m_CharacterActionsCallbackInterface.OnInteractable;
+                @Interactable.performed -= m_Wrapper.m_CharacterActionsCallbackInterface.OnInteractable;
+                @Interactable.canceled -= m_Wrapper.m_CharacterActionsCallbackInterface.OnInteractable;
             }
             m_Wrapper.m_CharacterActionsCallbackInterface = instance;
             if (instance != null)
@@ -232,6 +312,9 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Interactable.started += instance.OnInteractable;
+                @Interactable.performed += instance.OnInteractable;
+                @Interactable.canceled += instance.OnInteractable;
             }
         }
     }
@@ -241,5 +324,6 @@ public class @InputPlayerAction : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnInteractable(InputAction.CallbackContext context);
     }
 }

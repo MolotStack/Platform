@@ -7,12 +7,16 @@ public class ResetLevelZone : MonoBehaviour
     {
         if (collider?.tag == "Player")
         {
-            Debug.Log("Перезапуск уровня");
-
-            string indexCurrentLevel = SceneManager.GetActiveScene().name;
-
-            SceneManager.LoadScene(indexCurrentLevel);
+            ResetLevel();
         }
+    }
 
+    public void ResetLevel()
+    {
+        Debug.Log("Перезапуск уровня");
+
+        string indexCurrentLevel = SceneManager.GetActiveScene().name;
+
+        SceneManager.LoadScene(indexCurrentLevel);
     }
 }

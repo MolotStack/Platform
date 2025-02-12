@@ -23,8 +23,10 @@ namespace Assets.Code.Player.Hero
 
             _inputAction.Character.Click.canceled += OnClick;
 
-            _inputAction.Character.Jump.started += OnJump;
-            _inputAction.Character.Jump.canceled += OnJump;
+            _inputAction.Character.Jump.started += OnJumpStart;
+            _inputAction.Character.Jump.canceled += OnJumpCancel;
+
+            _inputAction.Character.Interactable.canceled += Interactive;
         }
 
 
@@ -36,8 +38,10 @@ namespace Assets.Code.Player.Hero
 
             _inputAction.Character.Click.canceled -= OnClick;
 
-            _inputAction.Character.Jump.started -= OnJump;
-            _inputAction.Character.Jump.canceled -= OnJump;
+            _inputAction.Character.Jump.started -= OnJumpStart;
+            _inputAction.Character.Jump.canceled -= OnJumpCancel;
+
+            _inputAction.Character.Interactable.canceled -= Interactive;
         }
 
         private void SetMovemntDirection(InputAction.CallbackContext obj)
@@ -45,14 +49,26 @@ namespace Assets.Code.Player.Hero
             _currentCharacter.CurrentInputDirection = (obj.ReadValue<float>());
         }
 
-        private void OnJump(InputAction.CallbackContext obj)
+        private void OnJumpStart(InputAction.CallbackContext obj)
         {
-            _currentCharacter.IsJump = (Convert.ToBoolean(obj.ReadValue<float>()));
+            _currentCharacter.CountJumps ++;
+            _currentCharacter.SetAnimationAirJump();
+            _currentCharacter.IsJump = true;
+        }
+        private void OnJumpCancel(InputAction.CallbackContext obj)
+        {
+            _currentCharacter.JumpTimeJumps = 0f;
+            _currentCharacter.IsJump = false;
         }
 
         private void OnClick(InputAction.CallbackContext obj)
         {
             //_currentCharacter.Click();
+        }
+
+        private void Interactive(InputAction.CallbackContext obj)
+        {
+            _currentCharacter.Interactions();
         }
     }
 }
