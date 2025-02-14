@@ -2,6 +2,11 @@
 
 public class Character : MonoBehaviour
 {
+    public bool IsDie
+    {
+        get { return _isDie; }
+        set { _isDie = value; }
+    }
     public bool IsJump
     {
         get { return _isJump; }
@@ -42,6 +47,12 @@ public class Character : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _currentSpriteRenderer;
 
+    [Header("Health")]
+    [SerializeField]
+    private bool _isDie;
+    [SerializeField]
+    private HealthComponent _healthComponent;
+
     [Header("Interact Settigs"), Space(15)]
     [SerializeField]
     private Transform _pointCenterRayZone;
@@ -68,6 +79,7 @@ public class Character : MonoBehaviour
     private static int _animIsRun = Animator.StringToHash("IsRuning");
     private static int _animVerticalVelocity = Animator.StringToHash("VerticalVelocity");
     private static int _animAirJump = Animator.StringToHash("AirJumping");
+    private static int _animIsDie = Animator.StringToHash("IsDie");
 
     #endregion
 
@@ -77,22 +89,34 @@ public class Character : MonoBehaviour
         _groundCheck = GetComponentInChildren<GroundCheck>();
         _currentAnimator = GetComponentInChildren<Animator>();
         _currentSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        _healthComponent = GetComponent<HealthComponent>();
+
+        _healthComponent.OnDied += SetStateDie;
+
     }
 
     private void Update()
     {
-        Jump();
+        if (!_isDie)
+        {
+            Jump();
 
-        CheackInteractingObjects();
+            CheackInteractingObjects();
+        }
     }
 
     private void FixedUpdate()
     {
-        Movement();
+        if (!_isDie)
+        {
+            Movement();
+        }
     }
 
     private void Movement()
     {
+
         if (_groundCheck.IsGrounded)
         {
             _rigidbody.sharedMaterial = _heroFriction;
@@ -103,7 +127,6 @@ public class Character : MonoBehaviour
         }
 
         _rigidbody.velocity = new Vector2(CalculateDirectionHorizontal(), _rigidbody.velocity.y);
-
         SetAnimation();
     }
     private void Jump()
@@ -136,7 +159,6 @@ public class Character : MonoBehaviour
     }
     private void SetAnimation()
     {
-
         if (_currentInputDirection.x != 0)
         {
             _currentAnimator.SetBool(_animIsRun, true);
@@ -212,5 +234,12 @@ public class Character : MonoBehaviour
     public void Teleport(Vector3 position)
     {
         transform.position = position;
+    }
+
+    private void SetStateDie()
+    {
+        _isDie = true;
+        _rigidbody.sharedMaterial = _heroFriction;
+        _currentAnimator.SetBool(_animIsDie, true);
     }
 }
