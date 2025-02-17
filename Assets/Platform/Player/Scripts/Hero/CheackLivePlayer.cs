@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CheackLivePlayer : MonoBehaviour
 {
-
     public void RestartLevel()
     {
         Debug.Log("Перезапуск после смерти");

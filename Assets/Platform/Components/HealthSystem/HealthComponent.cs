@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class HealthComponent : MonoBehaviour
 {
     public UnityAction OnDied;
+    public UnityAction<float> OnDamage;
     public UnityAction<float> OnChangedHealth;
     public UnityAction<float> OnChangedMaxHealth;
 
@@ -17,6 +18,11 @@ public class HealthComponent : MonoBehaviour
 
     public void ChangeHealth(float deltaHealth)
     {
+        if (deltaHealth < 0)
+        {
+            OnDamage?.Invoke(deltaHealth);
+        }
+
         _currentHealth += deltaHealth;
 
         if (_currentHealth <= 0)

@@ -44,14 +44,14 @@ public class Character : MonoBehaviour
     [Header("Animation"), Space(15)]
     [SerializeField]
     private Animator _currentAnimator;
-    [SerializeField]
-    private SpriteRenderer _currentSpriteRenderer;
 
     [Header("Health")]
     [SerializeField]
     private bool _isDie;
     [SerializeField]
     private HealthComponent _healthComponent;
+    [SerializeField]
+    private ParticleSystem _hitParticleSystem;
 
     [Header("Interact Settigs"), Space(15)]
     [SerializeField]
@@ -63,6 +63,10 @@ public class Character : MonoBehaviour
     [SerializeField]
     private LayerMask _interactingLayer;
     private IInteracting _currentSelectObject;
+
+    [Header("Wallet"), Space(15)]
+    [SerializeField]
+    private Wallet _currentWallet = new Wallet(100);
 
     private Vector2 _currentInputDirection;
 
@@ -80,7 +84,7 @@ public class Character : MonoBehaviour
     private static int _animVerticalVelocity = Animator.StringToHash("VerticalVelocity");
     private static int _animAirJump = Animator.StringToHash("AirJumping");
     private static int _animIsDie = Animator.StringToHash("IsDie");
-
+    private static int _animHit = Animator.StringToHash("Hit");
     #endregion
 
     private void Awake()
@@ -88,12 +92,12 @@ public class Character : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _groundCheck = GetComponentInChildren<GroundCheck>();
         _currentAnimator = GetComponentInChildren<Animator>();
-        _currentSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        //_hitParticleSystem = GetComponentInChildren<ParticleSystem>();
 
         _healthComponent = GetComponent<HealthComponent>();
 
         _healthComponent.OnDied += SetStateDie;
-
+        _healthComponent.OnDamage += TakeDamage;
     }
 
     private void Update()
@@ -112,6 +116,12 @@ public class Character : MonoBehaviour
         {
             Movement();
         }
+    }
+
+    private void OnDisable()
+    {
+        _healthComponent.OnDied -= SetStateDie;
+        _healthComponent.OnDamage -= TakeDamage;
     }
 
     private void Movement()
@@ -165,11 +175,11 @@ public class Character : MonoBehaviour
 
             if (_currentInputDirection.x > 0)
             {
-                _currentSpriteRenderer.flipX = false;
+                transform.localScale = Vector3.one;
             }
             else if (_currentInputDirection.x < 0)
             {
-                _currentSpriteRenderer.flipX = true;
+                transform.localScale = new Vector3(-1,1,1);
             }
         }
         else
@@ -223,7 +233,7 @@ public class Character : MonoBehaviour
 
     public void SetCoint(int coinCost)
     {
-        Debug.Log(coinCost);
+        _currentWallet.AddCoin(coinCost);
     }
 
     public void Interactions()
@@ -241,5 +251,30 @@ public class Character : MonoBehaviour
         _isDie = true;
         _rigidbody.sharedMaterial = _heroFriction;
         _currentAnimator.SetBool(_animIsDie, true);
+    }
+
+    private void TakeDamage(float damage)
+    {
+        if (_currentWallet.Coin > 0)
+        {
+            int intDamage = Mathf.Abs((int)damage);
+
+            if (_currentWallet.Coin < intDamage)
+            {
+                intDamage = _currentWallet.Coin;
+            }
+
+            var burst = _hitParticleSystem.emission.GetBurst(0);
+            burst.count = intDamage;
+            _hitParticleSystem.emission.SetBurst(0, burst);
+
+            _hitParticleSystem.gameObject.SetActive(true);
+            Debug.Log(intDamage);
+            _hitParticleSystem.Play();
+
+            _currentWallet.RemoveCoin(intDamage);
+        }
+
+        _currentAnimator.SetTrigger(_animHit);
     }
 }
